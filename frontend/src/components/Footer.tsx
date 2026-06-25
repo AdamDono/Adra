@@ -1,6 +1,6 @@
 "use client";
 
-import { Zap, Instagram, Twitter, Linkedin } from "lucide-react";
+import { Zap, Globe, Send, Share2 } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -81,9 +81,9 @@ export default function Footer() {
         {/* Social + copyright */}
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           {[
-            { Icon: Instagram, href: "#", label: "Instagram" },
-            { Icon: Twitter, href: "#", label: "Twitter" },
-            { Icon: Linkedin, href: "#", label: "LinkedIn" },
+            { Icon: Globe, href: "#", label: "Website" },
+            { Icon: Send, href: "#", label: "Twitter / X" },
+            { Icon: Share2, href: "#", label: "LinkedIn" },
           ].map(({ Icon, href, label }) => (
             <a
               key={label}
