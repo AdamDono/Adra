@@ -1,0 +1,23 @@
+# ─── Private planning & documentation ───────────────────────────────────────
+# These files contain internal strategy docs and should never be committed.
+README.md
+docs/
+
+# ─── OS & editor noise ───────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+
+# ─── IDE ─────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ─── Environment & secrets ───────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
