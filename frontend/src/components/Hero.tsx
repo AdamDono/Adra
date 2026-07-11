@@ -114,7 +114,7 @@ export default function Hero() {
         >
           <span className="pill">
             <Sparkles size={12} />
-            AI-powered ad creative — built for Africa
+            AI-powered ad creative
           </span>
         </motion.div>
 
@@ -285,13 +285,11 @@ export default function Hero() {
 
             {/* App UI mockup */}
             <div
+              className="mockup-container"
               style={{
                 padding: 32,
                 background: "linear-gradient(180deg, rgba(12,12,15,0.8) 0%, var(--bg-primary) 100%)",
                 minHeight: 360,
-                display: "flex",
-                gap: 24,
-                alignItems: "stretch",
               }}
             >
               {/* Left: Prompt panel */}
@@ -333,7 +331,7 @@ export default function Hero() {
               </div>
 
               {/* Right: Generated images */}
-              <div style={{ flex: 2, display: "flex", gap: 12 }}>
+              <div className="mockup-images" style={{ flex: 2 }}>
                 {[
                   { bg: "linear-gradient(135deg, rgba(197,168,128,0.1), rgba(140,109,63,0.05))", label: "Variant 1", active: true },
                   { bg: "rgba(255,255,255,0.01)", label: "Variant 2", active: false },
