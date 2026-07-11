@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Star } from "lucide-react";
 
@@ -13,6 +14,18 @@ const fadeUp = {
 };
 
 export default function Hero() {
+  const [count, setCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch("/api/waitlist")
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data.count === "number") {
+          setCount(data.count);
+        }
+      })
+      .catch((err) => console.error("Error fetching waitlist count:", err));
+  }, []);
   return (
     <section
       style={{
@@ -229,7 +242,10 @@ export default function Hero() {
               ))}
             </div>
             <p style={{ fontSize: 13, color: "var(--text-secondary)", margin: 0 }}>
-              <strong style={{ color: "var(--text-primary)" }}>200+ founders</strong> already on the waitlist
+              <strong style={{ color: "var(--text-primary)" }}>
+                {count !== null ? count : "..."} founders
+              </strong>{" "}
+              already on the waitlist
             </p>
           </div>
         </motion.div>

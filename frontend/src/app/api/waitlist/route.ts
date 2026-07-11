@@ -47,3 +47,22 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export async function GET() {
+  try {
+    const databaseUrl = process.env.DATABASE_URL;
+    if (!databaseUrl) {
+      return NextResponse.json({ count: 0 });
+    }
+
+    const sql = neon(databaseUrl);
+    const result = await sql`SELECT COUNT(*)::int as count FROM waitlist`;
+    const count = result[0]?.count ?? 0;
+
+    return NextResponse.json({ count });
+  } catch (error) {
+    console.error("Failed to fetch waitlist count:", error);
+    return NextResponse.json({ count: 0 }, { status: 500 });
+  }
+}
+

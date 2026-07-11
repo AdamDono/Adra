@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
@@ -14,6 +14,18 @@ export default function Waitlist() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
+  const [count, setCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch("/api/waitlist")
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data.count === "number") {
+          setCount(data.count);
+        }
+      })
+      .catch((err) => console.error("Error fetching waitlist count:", err));
+  }, []);
 
   const {
     register,
@@ -253,7 +265,7 @@ export default function Waitlist() {
             }}
           >
             {[
-              { value: "200+", label: "on waitlist" },
+              { value: count !== null ? `${count}` : "...", label: "on waitlist" },
               { value: "R0", label: "to get started" },
               { value: "< 30s", label: "to first creative" },
             ].map((stat) => (
