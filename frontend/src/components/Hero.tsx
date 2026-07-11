@@ -36,7 +36,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Radial glow — violet */}
+      {/* Radial glow — center accent */}
       <div
         style={{
           position: "absolute",
@@ -46,12 +46,12 @@ export default function Hero() {
           width: 600,
           height: 600,
           background:
-            "radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(197,168,128,0.08) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
 
-      {/* Radial glow — cyan */}
+      {/* Radial glow — right accent */}
       <div
         style={{
           position: "absolute",
@@ -60,7 +60,7 @@ export default function Hero() {
           width: 400,
           height: 400,
           background:
-            "radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(197,168,128,0.04) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -75,7 +75,7 @@ export default function Hero() {
           width: 80,
           height: 80,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, rgba(124,58,237,0.4), rgba(6,182,212,0.2))",
+          background: "linear-gradient(135deg, rgba(197,168,128,0.15), rgba(140,109,63,0.08))",
           filter: "blur(20px)",
         }}
       />
@@ -88,7 +88,7 @@ export default function Hero() {
           width: 100,
           height: 100,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, rgba(6,182,212,0.3), rgba(124,58,237,0.2))",
+          background: "linear-gradient(135deg, rgba(197,168,128,0.1), rgba(140,109,63,0.05))",
           filter: "blur(25px)",
         }}
       />
@@ -130,7 +130,7 @@ export default function Hero() {
             lineHeight: 1.05,
             letterSpacing: "-0.03em",
             marginBottom: 24,
-            color: "#F8FAFC",
+            color: "var(--text-primary)",
           }}
         >
           Your brand deserves{" "}
@@ -147,7 +147,7 @@ export default function Hero() {
           custom={0.2}
           style={{
             fontSize: "clamp(18px, 2.5vw, 22px)",
-            color: "rgba(148,163,184,0.9)",
+            color: "var(--text-secondary)",
             lineHeight: 1.6,
             maxWidth: 640,
             margin: "0 auto 40px",
@@ -155,7 +155,7 @@ export default function Hero() {
           }}
         >
           Adra generates professional ad creatives and social media content in{" "}
-          <strong style={{ color: "#F8FAFC", fontWeight: 600 }}>under 30 seconds</strong>.
+          <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>under 30 seconds</strong>.
           Upload your brand kit once. Get stunning outputs forever.
         </motion.p>
 
@@ -200,7 +200,7 @@ export default function Hero() {
         >
           {/* Avatars */}
           <div style={{ display: "flex" }}>
-            {["#7C3AED", "#06B6D4", "#10B981", "#F59E0B", "#EF4444"].map((color, i) => (
+            {["#C5A880", "#8C6D3F", "#5A4A35", "#9E9EA7", "#3A3A40"].map((color, i) => (
               <div
                 key={i}
                 style={{
@@ -208,14 +208,14 @@ export default function Hero() {
                   height: 36,
                   borderRadius: "50%",
                   background: `linear-gradient(135deg, ${color}, ${color}99)`,
-                  border: "2px solid #0D0D12",
+                  border: "2px solid var(--bg-primary)",
                   marginLeft: i === 0 ? 0 : -10,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontSize: 13,
                   fontWeight: 700,
-                  color: "white",
+                  color: i === 0 || i === 3 ? "#060608" : "white",
                 }}
               >
                 {["S", "M", "A", "T", "K"][i]}
@@ -225,11 +225,11 @@ export default function Hero() {
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 2 }}>
               {[1,2,3,4,5].map(i => (
-                <Star key={i} size={14} fill="#F59E0B" color="#F59E0B" />
+                <Star key={i} size={14} fill="#C5A880" color="#C5A880" />
               ))}
             </div>
-            <p style={{ fontSize: 13, color: "rgba(148,163,184,0.8)", margin: 0 }}>
-              <strong style={{ color: "#F8FAFC" }}>200+ founders</strong> already on the waitlist
+            <p style={{ fontSize: 13, color: "var(--text-secondary)", margin: 0 }}>
+              <strong style={{ color: "var(--text-primary)" }}>200+ founders</strong> already on the waitlist
             </p>
           </div>
         </motion.div>
@@ -248,30 +248,30 @@ export default function Hero() {
               margin: "0 auto",
               borderRadius: 24,
               overflow: "hidden",
-              border: "1px solid rgba(255,255,255,0.08)",
-              background: "rgba(255,255,255,0.03)",
-              boxShadow: "0 40px 120px rgba(0,0,0,0.6), 0 0 60px rgba(124,58,237,0.15)",
+              border: "1px solid var(--border)",
+              background: "rgba(255,255,255,0.01)",
+              boxShadow: "0 40px 120px rgba(0,0,0,0.6), 0 0 60px var(--glow)",
             }}
           >
             {/* Browser chrome */}
             <div
               style={{
                 padding: "14px 20px",
-                background: "rgba(255,255,255,0.04)",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
+                background: "rgba(255,255,255,0.02)",
+                borderBottom: "1px solid var(--border)",
                 display: "flex",
                 alignItems: "center",
                 gap: 8,
               }}
             >
-              <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#EF4444" }} />
-              <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#F59E0B" }} />
-              <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#10B981" }} />
+              <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#4A4A4F" }} />
+              <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#5A5A60" }} />
+              <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#7A7A80" }} />
               <div
                 style={{
                   flex: 1,
                   height: 28,
-                  background: "rgba(255,255,255,0.05)",
+                  background: "rgba(255,255,255,0.03)",
                   borderRadius: 6,
                   marginLeft: 12,
                   display: "flex",
@@ -279,7 +279,7 @@ export default function Hero() {
                   paddingLeft: 12,
                 }}
               >
-                <span style={{ color: "rgba(148,163,184,0.6)", fontSize: 13 }}>app.adra.ai/create</span>
+                <span style={{ color: "var(--text-muted)", fontSize: 13 }}>app.adra.ai/create</span>
               </div>
             </div>
 
@@ -287,7 +287,7 @@ export default function Hero() {
             <div
               style={{
                 padding: 32,
-                background: "linear-gradient(180deg, rgba(18,18,26,0.8) 0%, rgba(13,13,18,0.95) 100%)",
+                background: "linear-gradient(180deg, rgba(12,12,15,0.8) 0%, var(--bg-primary) 100%)",
                 minHeight: 360,
                 display: "flex",
                 gap: 24,
@@ -296,19 +296,20 @@ export default function Hero() {
             >
               {/* Left: Prompt panel */}
               <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 16 }}>
-                <div style={{ fontSize: 12, fontWeight: 600, color: "rgba(148,163,184,0.6)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
                   Your prompt
                 </div>
                 <div
                   style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(124,58,237,0.4)",
+                    background: "rgba(255,255,255,0.01)",
+                    border: "1px solid var(--border-hover)",
                     borderRadius: 12,
                     padding: 16,
                     fontSize: 15,
-                    color: "#F8FAFC",
+                    color: "var(--text-primary)",
                     lineHeight: 1.6,
                     flexGrow: 1,
+                    textAlign: "left",
                   }}
                 >
                   Instagram post for my coffee shop&apos;s summer iced drinks promotion
@@ -317,7 +318,7 @@ export default function Hero() {
                       display: "inline-block",
                       width: 2,
                       height: 18,
-                      background: "#7C3AED",
+                      background: "var(--accent)",
                       marginLeft: 2,
                       verticalAlign: "middle",
                       animation: "pulse-glow 1s ease-in-out infinite",
@@ -334,9 +335,9 @@ export default function Hero() {
               {/* Right: Generated images */}
               <div style={{ flex: 2, display: "flex", gap: 12 }}>
                 {[
-                  { bg: "linear-gradient(135deg, #7C3AED22, #06B6D422)", label: "Variant 1", active: true },
-                  { bg: "linear-gradient(135deg, #7C3AED11, #10B98111)", label: "Variant 2", active: false },
-                  { bg: "linear-gradient(135deg, #06B6D411, #F59E0B11)", label: "Variant 3", active: false },
+                  { bg: "linear-gradient(135deg, rgba(197,168,128,0.1), rgba(140,109,63,0.05))", label: "Variant 1", active: true },
+                  { bg: "rgba(255,255,255,0.01)", label: "Variant 2", active: false },
+                  { bg: "rgba(255,255,255,0.01)", label: "Variant 3", active: false },
                 ].map((card) => (
                   <div
                     key={card.label}
@@ -344,8 +345,8 @@ export default function Hero() {
                       flex: 1,
                       borderRadius: 12,
                       border: card.active
-                        ? "1.5px solid rgba(124,58,237,0.6)"
-                        : "1px solid rgba(255,255,255,0.06)",
+                        ? "1.5px solid var(--accent)"
+                        : "1px solid var(--border)",
                       background: card.bg,
                       display: "flex",
                       flexDirection: "column",
@@ -363,12 +364,12 @@ export default function Hero() {
                           position: "absolute",
                           top: 8,
                           right: 8,
-                          background: "linear-gradient(135deg, #7C3AED, #06B6D4)",
+                          background: "var(--gradient-accent)",
                           borderRadius: 6,
                           padding: "2px 8px",
                           fontSize: 10,
                           fontWeight: 700,
-                          color: "white",
+                          color: "#060608",
                         }}
                       >
                         Selected
@@ -380,16 +381,16 @@ export default function Hero() {
                         height: 48,
                         borderRadius: 12,
                         background: card.active
-                          ? "linear-gradient(135deg, #7C3AED, #06B6D4)"
-                          : "rgba(255,255,255,0.08)",
+                          ? "var(--gradient-accent)"
+                          : "rgba(255,255,255,0.03)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                       }}
                     >
-                      <Sparkles size={22} color={card.active ? "white" : "rgba(255,255,255,0.3)"} />
+                      <Sparkles size={22} color={card.active ? "#060608" : "rgba(255,255,255,0.2)"} />
                     </div>
-                    <span style={{ fontSize: 12, color: "rgba(148,163,184,0.6)", fontWeight: 500 }}>
+                    <span style={{ fontSize: 12, color: "var(--text-secondary)", fontWeight: 500 }}>
                       {card.label}
                     </span>
                   </div>
@@ -402,7 +403,7 @@ export default function Hero() {
           <div
             style={{
               height: 1,
-              background: "linear-gradient(90deg, transparent, rgba(124,58,237,0.4), rgba(6,182,212,0.4), transparent)",
+              background: "linear-gradient(90deg, transparent, var(--border-hover), transparent)",
               marginTop: -1,
             }}
           />

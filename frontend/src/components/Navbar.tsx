@@ -34,11 +34,11 @@ export default function Navbar() {
         padding: "0 24px",
         transition: "all 0.3s ease",
         background: scrolled
-          ? "rgba(13, 13, 18, 0.9)"
+          ? "rgba(6, 6, 8, 0.9)"
           : "transparent",
         backdropFilter: scrolled ? "blur(20px)" : "none",
         borderBottom: scrolled
-          ? "1px solid rgba(255,255,255,0.06)"
+          ? "1px solid var(--border)"
           : "1px solid transparent",
       }}
     >
@@ -67,19 +67,19 @@ export default function Navbar() {
               width: 36,
               height: 36,
               borderRadius: 10,
-              background: "linear-gradient(135deg, #7C3AED, #06B6D4)",
+              background: "var(--gradient-accent)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Zap size={20} color="white" fill="white" />
+            <Zap size={20} color="#060608" fill="#060608" />
           </div>
           <span
             style={{
               fontSize: 22,
               fontWeight: 800,
-              color: "#F8FAFC",
+              color: "var(--text-primary)",
               letterSpacing: "-0.02em",
             }}
           >
@@ -101,17 +101,17 @@ export default function Navbar() {
               key={link.label}
               href={link.href}
               style={{
-                color: "rgba(248,250,252,0.6)",
+                color: "var(--text-secondary)",
                 textDecoration: "none",
                 fontSize: 15,
                 fontWeight: 500,
                 transition: "color 0.2s ease",
               }}
               onMouseEnter={(e) =>
-                (e.currentTarget.style.color = "#F8FAFC")
+                (e.currentTarget.style.color = "var(--text-primary)")
               }
               onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "rgba(248,250,252,0.6)")
+                (e.currentTarget.style.color = "var(--text-secondary)")
               }
             >
               {link.label}
@@ -130,7 +130,7 @@ export default function Navbar() {
               display: "none",
               background: "none",
               border: "none",
-              color: "#F8FAFC",
+              color: "var(--text-primary)",
               cursor: "pointer",
               padding: 4,
             }}
@@ -150,8 +150,8 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             style={{
-              background: "rgba(13,13,18,0.98)",
-              borderTop: "1px solid rgba(255,255,255,0.06)",
+              background: "rgba(6,6,8,0.98)",
+              borderTop: "1px solid var(--border)",
               padding: "16px 0",
             }}
           >
@@ -163,7 +163,7 @@ export default function Navbar() {
                 style={{
                   display: "block",
                   padding: "14px 24px",
-                  color: "rgba(248,250,252,0.8)",
+                  color: "var(--text-secondary)",
                   textDecoration: "none",
                   fontSize: 16,
                   fontWeight: 500,

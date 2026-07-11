@@ -11,8 +11,8 @@ const steps = [
     description:
       "Upload your logo, pick your brand colours, enter your brand name and choose your tone of voice. Takes less than 3 minutes. Do it once, use it forever.",
     detail: "Logo · Colors · Voice · Tagline",
-    color: "#7C3AED",
-    colorFaded: "rgba(124,58,237,0.1)",
+    color: "#C5A880",
+    colorFaded: "rgba(197, 168, 128, 0.05)",
   },
   {
     number: "02",
@@ -21,8 +21,8 @@ const steps = [
     description:
       "Type a prompt like \"Instagram post for my coffee shop summer promotion\" or upload a product photo. Adra's AI does the rest — brand context injected automatically.",
     detail: "Text prompt · Product upload",
-    color: "#06B6D4",
-    colorFaded: "rgba(6,182,212,0.1)",
+    color: "#A88C64",
+    colorFaded: "rgba(168, 140, 100, 0.05)",
   },
   {
     number: "03",
@@ -31,8 +31,8 @@ const steps = [
     description:
       "Get 3 on-brand image variants and AI-generated captions for each in under 15 seconds. Pick your favourite, copy the caption, and post. Done.",
     detail: "3 variants · AI captions · 1-click download",
-    color: "#10B981",
-    colorFaded: "rgba(16,185,129,0.1)",
+    color: "#8C6D3F",
+    colorFaded: "rgba(140, 109, 63, 0.05)",
   },
 ];
 
@@ -50,7 +50,7 @@ export default function HowItWorks() {
           transform: "translate(-50%, -50%)",
           width: 800,
           height: 400,
-          background: "radial-gradient(ellipse, rgba(6,182,212,0.07) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse, rgba(197,168,128,0.03) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -73,7 +73,7 @@ export default function HowItWorks() {
               fontWeight: 800,
               letterSpacing: "-0.03em",
               marginBottom: 20,
-              color: "#F8FAFC",
+              color: "var(--text-primary)",
             }}
           >
             From blank canvas to{" "}
@@ -83,7 +83,7 @@ export default function HowItWorks() {
           <p
             style={{
               fontSize: 18,
-              color: "rgba(148,163,184,0.8)",
+              color: "var(--text-secondary)",
               maxWidth: 520,
               margin: "0 auto",
               lineHeight: 1.6,
@@ -148,7 +148,7 @@ export default function HowItWorks() {
                       right: 24,
                       fontSize: 64,
                       fontWeight: 900,
-                      color: "rgba(255,255,255,0.03)",
+                      color: "rgba(255,255,255,0.015)",
                       lineHeight: 1,
                       fontVariantNumeric: "tabular-nums",
                     }}
@@ -167,10 +167,10 @@ export default function HowItWorks() {
                       alignItems: "center",
                       justifyContent: "center",
                       marginBottom: 24,
-                      boxShadow: `0 8px 24px ${step.color}40`,
+                      boxShadow: `0 8px 24px ${step.color}15`,
                     }}
                   >
-                    <Icon size={26} color="white" />
+                    <Icon size={26} color="#060608" />
                   </div>
 
                   {/* Step label */}
@@ -191,7 +191,7 @@ export default function HowItWorks() {
                     style={{
                       fontSize: 22,
                       fontWeight: 700,
-                      color: "#F8FAFC",
+                      color: "var(--text-primary)",
                       marginBottom: 14,
                       letterSpacing: "-0.02em",
                     }}
@@ -202,7 +202,7 @@ export default function HowItWorks() {
                   <p
                     style={{
                       fontSize: 15,
-                      color: "rgba(148,163,184,0.8)",
+                      color: "var(--text-secondary)",
                       lineHeight: 1.7,
                       marginBottom: 24,
                     }}
@@ -222,7 +222,7 @@ export default function HowItWorks() {
                           borderRadius: 6,
                           background: step.colorFaded,
                           color: step.color,
-                          border: `1px solid ${step.color}30`,
+                          border: `1px solid ${step.color}20`,
                         }}
                       >
                         {tag}
@@ -245,16 +245,16 @@ export default function HowItWorks() {
             textAlign: "center",
             marginTop: 56,
             padding: "28px 40px",
-            background: "rgba(124,58,237,0.08)",
-            border: "1px solid rgba(124,58,237,0.2)",
+            background: "rgba(197, 168, 128, 0.04)",
+            border: "1px solid rgba(197, 168, 128, 0.15)",
             borderRadius: 16,
             display: "inline-block",
             width: "100%",
           }}
         >
-          <p style={{ color: "rgba(148,163,184,0.9)", fontSize: 16, margin: 0 }}>
+          <p style={{ color: "var(--text-secondary)", fontSize: 16, margin: 0 }}>
             ⚡{" "}
-            <strong style={{ color: "#F8FAFC" }}>Total time from sign-up to first post:</strong>{" "}
+            <strong style={{ color: "var(--text-primary)" }}>Total time from sign-up to first post:</strong>{" "}
             <span className="gradient-text" style={{ fontWeight: 700, fontSize: 18 }}>
               under 5 minutes
             </span>

@@ -22,7 +22,7 @@ export default function Waitlist() {
 
   const onSubmit = async (data: FormData) => {
     setLoading(true);
-    // TODO: wire to Supabase in Week 2
+    // TODO: submit to backend endpoint or Next.js route connected to Neon DB
     console.log("Waitlist signup:", data);
     await new Promise((r) => setTimeout(r, 1200));
     setLoading(false);
@@ -43,7 +43,7 @@ export default function Waitlist() {
           width: 800,
           height: 600,
           background:
-            "radial-gradient(ellipse, rgba(124,58,237,0.2) 0%, rgba(6,182,212,0.1) 50%, transparent 70%)",
+            "radial-gradient(ellipse, rgba(197,168,128,0.06) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -75,7 +75,7 @@ export default function Waitlist() {
               fontWeight: 900,
               letterSpacing: "-0.03em",
               marginBottom: 20,
-              color: "#F8FAFC",
+              color: "var(--text-primary)",
               lineHeight: 1.1,
             }}
           >
@@ -87,7 +87,7 @@ export default function Waitlist() {
           <p
             style={{
               fontSize: 18,
-              color: "rgba(148,163,184,0.8)",
+              color: "var(--text-secondary)",
               lineHeight: 1.6,
               marginBottom: 48,
               maxWidth: 500,
@@ -95,7 +95,7 @@ export default function Waitlist() {
             }}
           >
             Join the waitlist and get early access when we launch. First 100 users get{" "}
-            <strong style={{ color: "#A855F7" }}>50 free credits</strong> on signup.
+            <strong style={{ color: "var(--accent)" }}>50 free credits</strong> on signup.
           </p>
 
           {submitted ? (
@@ -105,8 +105,8 @@ export default function Waitlist() {
               transition={{ duration: 0.5 }}
               style={{
                 padding: "40px 48px",
-                background: "rgba(16,185,129,0.1)",
-                border: "1px solid rgba(16,185,129,0.3)",
+                background: "rgba(197, 168, 128, 0.04)",
+                border: "1px solid var(--border-hover)",
                 borderRadius: 20,
               }}
             >
@@ -115,20 +115,20 @@ export default function Waitlist() {
                   width: 64,
                   height: 64,
                   borderRadius: "50%",
-                  background: "rgba(16,185,129,0.2)",
-                  border: "2px solid rgba(16,185,129,0.5)",
+                  background: "rgba(197, 168, 128, 0.1)",
+                  border: "2px solid rgba(197, 168, 128, 0.3)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   margin: "0 auto 20px",
                 }}
               >
-                <Check size={28} color="#10B981" strokeWidth={2.5} />
+                <Check size={28} color="var(--accent)" strokeWidth={2.5} />
               </div>
-              <h3 style={{ fontSize: 24, fontWeight: 700, color: "#F8FAFC", marginBottom: 10 }}>
+              <h3 style={{ fontSize: 24, fontWeight: 700, color: "var(--text-primary)", marginBottom: 10 }}>
                 You&apos;re on the list! 🎉
               </h3>
-              <p style={{ color: "rgba(148,163,184,0.8)", fontSize: 16, margin: 0 }}>
+              <p style={{ color: "var(--text-secondary)", fontSize: 16, margin: 0 }}>
                 We&apos;ll email you as soon as early access opens. Expect something special.
               </p>
             </motion.div>
@@ -193,8 +193,8 @@ export default function Waitlist() {
                           style={{
                             width: 18,
                             height: 18,
-                            border: "2px solid rgba(255,255,255,0.3)",
-                            borderTopColor: "white",
+                            border: "2px solid rgba(6,6,8,0.3)",
+                            borderTopColor: "#060608",
                             borderRadius: "50%",
                             animation: "spin-slow 0.8s linear infinite",
                           }}
@@ -210,7 +210,7 @@ export default function Waitlist() {
                 </button>
               </div>
 
-              <p style={{ fontSize: 13, color: "rgba(148,163,184,0.5)", margin: 0 }}>
+              <p style={{ fontSize: 13, color: "var(--text-muted)", margin: 0 }}>
                 No spam. No credit card. Unsubscribe anytime.
               </p>
             </form>
@@ -238,7 +238,7 @@ export default function Waitlist() {
                 >
                   {stat.value}
                 </div>
-                <div style={{ fontSize: 13, color: "rgba(148,163,184,0.6)", marginTop: 2 }}>
+                <div style={{ fontSize: 13, color: "var(--text-secondary)", marginTop: 2 }}>
                   {stat.label}
                 </div>
               </div>

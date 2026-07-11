@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer
       style={{
-        borderTop: "1px solid rgba(255,255,255,0.06)",
+        borderTop: "1px solid var(--border)",
         padding: "48px 24px",
         background: "rgba(255,255,255,0.01)",
       }}
@@ -29,19 +29,19 @@ export default function Footer() {
               width: 32,
               height: 32,
               borderRadius: 9,
-              background: "linear-gradient(135deg, #7C3AED, #06B6D4)",
+              background: "var(--gradient-accent)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Zap size={17} color="white" fill="white" />
+            <Zap size={17} color="#060608" fill="#060608" />
           </div>
           <span
             style={{
               fontSize: 18,
               fontWeight: 800,
-              color: "#F8FAFC",
+              color: "var(--text-primary)",
               letterSpacing: "-0.02em",
             }}
           >
@@ -50,7 +50,7 @@ export default function Footer() {
           <span
             style={{
               fontSize: 12,
-              color: "rgba(148,163,184,0.4)",
+              color: "var(--text-muted)",
               marginLeft: 4,
             }}
           >
@@ -66,12 +66,12 @@ export default function Footer() {
               href={`#${link.toLowerCase().replace(/ /g, "-")}`}
               style={{
                 fontSize: 14,
-                color: "rgba(148,163,184,0.6)",
+                color: "var(--text-secondary)",
                 textDecoration: "none",
                 transition: "color 0.2s",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#F8FAFC")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(148,163,184,0.6)")}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
             >
               {link}
             </a>
@@ -93,24 +93,24 @@ export default function Footer() {
                 width: 36,
                 height: 36,
                 borderRadius: 10,
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid var(--border)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "rgba(148,163,184,0.6)",
+                color: "var(--text-secondary)",
                 textDecoration: "none",
                 transition: "all 0.2s",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.background = "rgba(124,58,237,0.2)";
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(124,58,237,0.4)";
-                (e.currentTarget as HTMLAnchorElement).style.color = "#A855F7";
+                (e.currentTarget as HTMLAnchorElement).style.background = "rgba(197, 168, 128, 0.15)";
+                (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--border-hover)";
+                (e.currentTarget as HTMLAnchorElement).style.color = "var(--accent)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.05)";
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.08)";
-                (e.currentTarget as HTMLAnchorElement).style.color = "rgba(148,163,184,0.6)";
+                (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.02)";
+                (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--border)";
+                (e.currentTarget as HTMLAnchorElement).style.color = "var(--text-secondary)";
               }}
             >
               <Icon size={16} />
@@ -124,13 +124,13 @@ export default function Footer() {
           maxWidth: 1200,
           margin: "24px auto 0",
           paddingTop: 24,
-          borderTop: "1px solid rgba(255,255,255,0.04)",
+          borderTop: "1px solid var(--border)",
           textAlign: "center",
           fontSize: 13,
-          color: "rgba(148,163,184,0.4)",
+          color: "var(--text-muted)",
         }}
       >
-        © {new Date().getFullYear()} Adra. Built in South Africa. 🇿🇦
+        © {new Date().getFullYear()} Adra. All rights reserved.
       </div>
     </footer>
   );

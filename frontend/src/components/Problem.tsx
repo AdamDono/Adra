@@ -11,9 +11,9 @@ const pains = [
       "You're running a business, not a creative agency. Spending 3 hours in Canva every week isn't a strategy — it's a tax on your growth.",
     stat: "3h/week",
     statLabel: "avg. time spent on content",
-    color: "#EF4444",
-    colorFaded: "rgba(239,68,68,0.1)",
-    colorBorder: "rgba(239,68,68,0.2)",
+    color: "#C5A880",
+    colorFaded: "rgba(197, 168, 128, 0.05)",
+    colorBorder: "rgba(197, 168, 128, 0.12)",
   },
   {
     icon: DollarSign,
@@ -22,9 +22,9 @@ const pains = [
       "Hiring a designer costs R8,000–R25,000/month. Freelancers take days. Ad agencies want a retainer. None of it makes sense at your scale.",
     stat: "R15,000",
     statLabel: "avg. monthly agency retainer",
-    color: "#F59E0B",
-    colorFaded: "rgba(245,158,11,0.1)",
-    colorBorder: "rgba(245,158,11,0.2)",
+    color: "#A88C64",
+    colorFaded: "rgba(168, 140, 100, 0.05)",
+    colorBorder: "rgba(168, 140, 100, 0.12)",
   },
   {
     icon: Palette,
@@ -33,9 +33,9 @@ const pains = [
       "Generic templates make you look like everyone else. Brand consistency matters. But without a designer, maintaining it is nearly impossible.",
     stat: "67%",
     statLabel: "of SMBs have inconsistent branding",
-    color: "#8B5CF6",
-    colorFaded: "rgba(139,92,246,0.1)",
-    colorBorder: "rgba(139,92,246,0.2)",
+    color: "#8C6D3F",
+    colorFaded: "rgba(140, 109, 63, 0.05)",
+    colorBorder: "rgba(140, 109, 63, 0.12)",
   },
 ];
 
@@ -63,7 +63,7 @@ export default function Problem() {
               fontWeight: 800,
               letterSpacing: "-0.03em",
               marginBottom: 20,
-              color: "#F8FAFC",
+              color: "var(--text-primary)",
             }}
           >
             Great marketing is out of reach{" "}
@@ -72,7 +72,7 @@ export default function Problem() {
           <p
             style={{
               fontSize: 18,
-              color: "rgba(148,163,184,0.8)",
+              color: "var(--text-secondary)",
               maxWidth: 560,
               margin: "0 auto",
               lineHeight: 1.6,
@@ -134,7 +134,7 @@ export default function Problem() {
                   style={{
                     fontSize: 22,
                     fontWeight: 700,
-                    color: "#F8FAFC",
+                    color: "var(--text-primary)",
                     marginBottom: 12,
                     letterSpacing: "-0.02em",
                   }}
@@ -145,7 +145,7 @@ export default function Problem() {
                 <p
                   style={{
                     fontSize: 15,
-                    color: "rgba(148,163,184,0.8)",
+                    color: "var(--text-secondary)",
                     lineHeight: 1.7,
                     marginBottom: 28,
                   }}
@@ -165,7 +165,7 @@ export default function Problem() {
                   <div style={{ fontSize: 24, fontWeight: 800, color: pain.color, letterSpacing: "-0.02em" }}>
                     {pain.stat}
                   </div>
-                  <div style={{ fontSize: 13, color: "rgba(148,163,184,0.7)", marginTop: 2 }}>
+                  <div style={{ fontSize: 13, color: "var(--text-secondary)", marginTop: 2 }}>
                     {pain.statLabel}
                   </div>
                 </div>

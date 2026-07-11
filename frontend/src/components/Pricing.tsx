@@ -20,8 +20,8 @@ const plans = [
     cta: "Join waitlist",
     ctaHref: "#waitlist",
     popular: false,
-    color: "rgba(255,255,255,0.06)",
-    borderColor: "rgba(255,255,255,0.08)",
+    color: "rgba(255,255,255,0.02)",
+    borderColor: "var(--border)",
   },
   {
     name: "Growth",
@@ -41,8 +41,8 @@ const plans = [
     cta: "Join waitlist",
     ctaHref: "#waitlist",
     popular: true,
-    color: "linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.08))",
-    borderColor: "rgba(124,58,237,0.4)",
+    color: "linear-gradient(135deg, rgba(197, 168, 128, 0.08), rgba(140, 109, 63, 0.03))",
+    borderColor: "var(--border-hover)",
   },
   {
     name: "Pro",
@@ -63,8 +63,8 @@ const plans = [
     cta: "Join waitlist",
     ctaHref: "#waitlist",
     popular: false,
-    color: "rgba(255,255,255,0.04)",
-    borderColor: "rgba(255,255,255,0.08)",
+    color: "rgba(255,255,255,0.01)",
+    borderColor: "var(--border)",
   },
 ];
 
@@ -81,7 +81,7 @@ export default function Pricing() {
           top: "20%",
           width: 500,
           height: 500,
-          background: "radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(197,168,128,0.02) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -104,7 +104,7 @@ export default function Pricing() {
               fontWeight: 800,
               letterSpacing: "-0.03em",
               marginBottom: 20,
-              color: "#F8FAFC",
+              color: "var(--text-primary)",
             }}
           >
             Simple pricing.{" "}
@@ -113,7 +113,7 @@ export default function Pricing() {
           <p
             style={{
               fontSize: 18,
-              color: "rgba(148,163,184,0.8)",
+              color: "var(--text-secondary)",
               maxWidth: 480,
               margin: "0 auto",
               lineHeight: 1.6,
@@ -156,8 +156,8 @@ export default function Pricing() {
                     top: -1,
                     left: "50%",
                     transform: "translateX(-50%)",
-                    background: "linear-gradient(135deg, #7C3AED, #06B6D4)",
-                    color: "white",
+                    background: "var(--gradient-accent)",
+                    color: "#060608",
                     fontSize: 11,
                     fontWeight: 700,
                     padding: "5px 18px",
@@ -177,13 +177,13 @@ export default function Pricing() {
                     style={{
                       fontSize: 20,
                       fontWeight: 700,
-                      color: "#F8FAFC",
+                      color: "var(--text-primary)",
                       marginBottom: 4,
                     }}
                   >
                     {plan.name}
                   </h3>
-                  <p style={{ fontSize: 14, color: "rgba(148,163,184,0.7)", margin: 0 }}>
+                  <p style={{ fontSize: 14, color: "var(--text-secondary)", margin: 0 }}>
                     {plan.description}
                   </p>
                 </div>
@@ -194,13 +194,13 @@ export default function Pricing() {
                     style={{
                       fontSize: 44,
                       fontWeight: 900,
-                      color: "#F8FAFC",
+                      color: "var(--text-primary)",
                       letterSpacing: "-0.03em",
                     }}
                   >
                     {plan.price}
                   </span>
-                  <span style={{ fontSize: 16, color: "rgba(148,163,184,0.6)", marginLeft: 4 }}>
+                  <span style={{ fontSize: 16, color: "var(--text-secondary)", opacity: 0.7, marginLeft: 4 }}>
                     {plan.priceNote}
                   </span>
                 </div>
@@ -211,15 +211,15 @@ export default function Pricing() {
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 6,
-                    background: "rgba(124,58,237,0.12)",
-                    border: "1px solid rgba(124,58,237,0.25)",
+                    background: "rgba(197, 168, 128, 0.06)",
+                    border: "1px solid rgba(197, 168, 128, 0.15)",
                     borderRadius: 8,
                     padding: "5px 12px",
                     marginBottom: 28,
                   }}
                 >
-                  <Zap size={13} color="#A855F7" />
-                  <span style={{ fontSize: 13, fontWeight: 600, color: "#A855F7" }}>
+                  <Zap size={13} color="var(--accent)" />
+                  <span style={{ fontSize: 13, fontWeight: 600, color: "var(--accent)" }}>
                     {plan.credits}
                   </span>
                 </div>
@@ -237,7 +237,8 @@ export default function Pricing() {
                         alignItems: "center",
                         gap: 10,
                         fontSize: 14,
-                        color: "rgba(248,250,252,0.85)",
+                        color: "var(--text-primary)",
+                        opacity: 0.9,
                       }}
                     >
                       <div
@@ -245,15 +246,15 @@ export default function Pricing() {
                           width: 20,
                           height: 20,
                           borderRadius: 6,
-                          background: "rgba(16,185,129,0.15)",
-                          border: "1px solid rgba(16,185,129,0.3)",
+                          background: "rgba(197, 168, 128, 0.08)",
+                          border: "1px solid rgba(197, 168, 128, 0.2)",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                           flexShrink: 0,
                         }}
                       >
-                        <Check size={12} color="#10B981" strokeWidth={3} />
+                        <Check size={12} color="var(--accent)" strokeWidth={3} />
                       </div>
                       {feat}
                     </li>
@@ -287,7 +288,8 @@ export default function Pricing() {
             textAlign: "center",
             marginTop: 40,
             fontSize: 14,
-            color: "rgba(148,163,184,0.6)",
+            color: "var(--text-secondary)",
+            opacity: 0.6,
           }}
         >
           💳 No credit card required to join the waitlist. Pricing is indicative and may change before launch.
