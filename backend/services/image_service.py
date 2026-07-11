@@ -1,28 +1,43 @@
 import urllib.parse
 import io
+import time
 import requests
 from PIL import Image, ImageOps
 
-def generate_ad_creative(prompt: str, logo_bytes: bytes = None, brand_colors: list = None, seed: int = None) -> bytes:
+def generate_ad_creative(prompt: str, logo_bytes: bytes = None, brand_colors: list = None, seed: int = None, model: str = None) -> bytes:
     """
     Generates an image using an open AI endpoint, then composites a brand logo onto it using Pillow.
     """
     # 1. Generate the base image using Pollinations.ai (free, no auth required, fast)
     encoded_prompt = urllib.parse.quote(prompt)
     seed_str = f"&seed={seed}" if seed is not None else ""
-    image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=800&height=800&nologo=true&private=true{seed_str}"
+    model_str = f"&model={model}" if model else ""
+    image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=800&height=800&nologo=true&private=true{seed_str}{model_str}"
     
-    try:
-        response = requests.get(image_url, timeout=30)
-        response.raise_for_status()
-        base_image_data = response.content
-    except Exception as e:
-        print(f"Failed to generate base image via API: {e}")
-        # Fallback: Create a solid color/gradient background if API fails
-        bg = Image.new("RGBA", (800, 800), color=brand_colors[0] if brand_colors else "#1E1E24")
-        temp_io = io.BytesIO()
-        bg.save(temp_io, format="PNG")
-        base_image_data = temp_io.getvalue()
+    max_retries = 3
+    base_delay = 1.5  # seconds
+    base_image_data = None
+
+    for attempt in range(max_retries):
+        try:
+            response = requests.get(image_url, timeout=20)
+            if response.status_code == 429:
+                # Rate limited, back off and retry
+                time.sleep(base_delay * (attempt + 1))
+                continue
+            response.raise_for_status()
+            base_image_data = response.content
+            break
+        except Exception as e:
+            print(f"Attempt {attempt + 1} failed for image generation: {e}")
+            if attempt == max_retries - 1:
+                # Last attempt failed, fall back
+                bg = Image.new("RGBA", (800, 800), color=brand_colors[0] if brand_colors else "#1E1E24")
+                temp_io = io.BytesIO()
+                bg.save(temp_io, format="PNG")
+                base_image_data = temp_io.getvalue()
+            else:
+                time.sleep(base_delay * (attempt + 1))
 
     # 2. If no logo is provided, just return the generated image
     if not logo_bytes:

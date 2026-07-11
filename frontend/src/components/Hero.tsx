@@ -20,6 +20,7 @@ export default function Hero() {
   const [generatedImages, setGeneratedImages] = useState<(string | null)[]>([null, null, null]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [loadingStates, setLoadingStates] = useState<boolean[]>([false, false, false]);
+  const [selectedModel, setSelectedModel] = useState("flux");
 
   useEffect(() => {
     fetch("/api/waitlist")
@@ -42,6 +43,7 @@ export default function Hero() {
       const formData = new FormData();
       formData.append("prompt", promptInput);
       formData.append("seed", seed.toString());
+      formData.append("model", selectedModel);
       if (selectedLogo) {
         formData.append("logo", selectedLogo);
       }
@@ -81,7 +83,10 @@ export default function Hero() {
       Math.floor(Math.random() * 100000) + 5678,
     ];
 
-    await Promise.all(seeds.map((seed, idx) => generateVariant(idx, seed)));
+    // Trigger variant generations sequentially to avoid concurrent rate limits
+    for (let i = 0; i < seeds.length; i++) {
+      await generateVariant(i, seeds[i]);
+    }
     setIsGenerating(false);
   };
 
@@ -331,6 +336,34 @@ export default function Hero() {
                   }}
                 />
                 
+                {/* Model Selector */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 6, textAlign: "left" }}>
+                  <div style={{ fontSize: 11, fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                    Select AI Model
+                  </div>
+                  <select
+                    value={selectedModel}
+                    onChange={(e) => setSelectedModel(e.target.value)}
+                    disabled={isGenerating}
+                    style={{
+                      width: "100%",
+                      background: "rgba(255,255,255,0.02)",
+                      border: "1px solid var(--border)",
+                      borderRadius: 10,
+                      color: "var(--text-primary)",
+                      padding: "10px 14px",
+                      fontSize: 13,
+                      outline: "none",
+                      cursor: isGenerating ? "not-allowed" : "pointer",
+                      fontFamily: "inherit",
+                    }}
+                  >
+                    <option value="flux" style={{ background: "#0c0c0f", color: "#fff" }}>FLUX.1 (Default - Speed & Realism)</option>
+                    <option value="turbo" style={{ background: "#0c0c0f", color: "#fff" }}>SDXL Turbo (Super Fast)</option>
+                    <option value="flux-anime" style={{ background: "#0c0c0f", color: "#fff" }}>FLUX Anime (Stylized Art)</option>
+                  </select>
+                </div>
+                
                 {/* Logo Uploader */}
                 <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
                   <label
@@ -418,7 +451,7 @@ export default function Hero() {
               </div>
 
               {/* Right: Generated images */}
-              <div className="mockup-images" style={{ flex: 2 }}>
+              <div className="mockup-images" style={{ flex: 2, display: "flex", flexDirection: "row", gap: 12, width: "100%" }}>
                 {[
                   { bg: "linear-gradient(135deg, rgba(197,168,128,0.1), rgba(140,109,63,0.05))", label: "Variant 1", active: true },
                   { bg: "rgba(255,255,255,0.01)", label: "Variant 2", active: false },
