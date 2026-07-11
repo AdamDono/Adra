@@ -15,6 +15,10 @@ const fadeUp = {
 
 export default function Hero() {
   const [count, setCount] = useState<number | null>(null);
+  const [promptInput, setPromptInput] = useState("A professional studio photo of a luxury watch, elegant dark golden lighting, highly detailed");
+  const [selectedLogo, setSelectedLogo] = useState<File | null>(null);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
     fetch("/api/waitlist")
@@ -26,6 +30,39 @@ export default function Hero() {
       })
       .catch((err) => console.error("Error fetching waitlist count:", err));
   }, []);
+
+  const handleGenerate = async () => {
+    if (!promptInput) return;
+    setIsGenerating(true);
+    setGeneratedImage(null);
+
+    const formData = new FormData();
+    formData.append("prompt", promptInput);
+    if (selectedLogo) {
+      formData.append("logo", selectedLogo);
+    }
+
+    try {
+      const response = await fetch("http://localhost:8000/api/generate", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate image from backend.");
+      }
+
+      const blob = await response.blob();
+      const imageUrl = URL.createObjectURL(blob);
+      setGeneratedImage(imageUrl);
+    } catch (error) {
+      console.error("Generation error:", error);
+      alert("Error generating ad creative. Make sure the backend server is running on port 8000.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   return (
     <section
       style={{
@@ -39,67 +76,26 @@ export default function Hero() {
         paddingBottom: 80,
       }}
     >
-      {/* Background grid */}
-      <div
-        className="bg-grid"
-        style={{
-          position: "absolute",
-          inset: 0,
-          opacity: 0.4,
-        }}
-      />
-
-      {/* Radial glow — center accent */}
+      {/* Background elements */}
       <div
         style={{
           position: "absolute",
-          top: "20%",
           left: "50%",
-          transform: "translateX(-50%)",
-          width: 600,
-          height: 600,
-          background:
-            "radial-gradient(circle, rgba(197,168,128,0.08) 0%, transparent 70%)",
+          top: "30%",
+          transform: "translate(-50%, -50%)",
+          width: 800,
+          height: 800,
+          background: "radial-gradient(circle, rgba(197,168,128,0.06) 0%, transparent 60%)",
           pointerEvents: "none",
         }}
       />
-
-      {/* Radial glow — right accent */}
       <div
         style={{
           position: "absolute",
-          top: "40%",
-          right: "-10%",
+          left: "15%",
+          top: "15%",
           width: 400,
           height: 400,
-          background:
-            "radial-gradient(circle, rgba(197,168,128,0.04) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* Floating orbs */}
-      <div
-        className="animate-float"
-        style={{
-          position: "absolute",
-          top: "15%",
-          left: "8%",
-          width: 80,
-          height: 80,
-          borderRadius: "50%",
-          background: "linear-gradient(135deg, rgba(197,168,128,0.15), rgba(140,109,63,0.08))",
-          filter: "blur(20px)",
-        }}
-      />
-      <div
-        className="animate-float-delayed"
-        style={{
-          position: "absolute",
-          bottom: "20%",
-          right: "8%",
-          width: 100,
-          height: 100,
           borderRadius: "50%",
           background: "linear-gradient(135deg, rgba(197,168,128,0.1), rgba(140,109,63,0.05))",
           filter: "blur(25px)",
@@ -141,38 +137,34 @@ export default function Hero() {
             fontSize: "clamp(44px, 7vw, 80px)",
             fontWeight: 900,
             lineHeight: 1.05,
-            letterSpacing: "-0.03em",
+            letterSpacing: "-0.04em",
             marginBottom: 24,
             color: "var(--text-primary)",
           }}
         >
-          Your brand deserves{" "}
-          <span className="gradient-text text-glow">
-            world-class ads.
-          </span>
+          Generate on-brand
+          <br />
+          <span className="gradient-text">ads in seconds.</span>
         </motion.h1>
 
-        {/* Sub-headline */}
+        {/* Subhead */}
         <motion.p
           variants={fadeUp}
           initial="hidden"
           animate="visible"
           custom={0.2}
           style={{
-            fontSize: "clamp(18px, 2.5vw, 22px)",
+            fontSize: "clamp(16px, 3vw, 20px)",
             color: "var(--text-secondary)",
-            lineHeight: 1.6,
-            maxWidth: 640,
+            maxWidth: 580,
             margin: "0 auto 40px",
-            fontWeight: 400,
+            lineHeight: 1.6,
           }}
         >
-          Adra generates professional ad creatives and social media content in{" "}
-          <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>under 30 seconds</strong>.
-          Upload your brand kit once. Get stunning outputs forever.
+          Stop spending hours on manual design. Upload your brand kit, describe your product, and watch the AI do the work.
         </motion.p>
 
-        {/* CTAs */}
+        {/* CTA buttons */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -180,11 +172,11 @@ export default function Hero() {
           custom={0.3}
           style={{
             display: "flex",
-            alignItems: "center",
             justifyContent: "center",
+            alignItems: "center",
             gap: 16,
             flexWrap: "wrap",
-            marginBottom: 64,
+            marginBottom: 48,
           }}
         >
           <a href="#waitlist" className="btn-primary" style={{ fontSize: 17, padding: "16px 32px" }}>
@@ -192,12 +184,9 @@ export default function Hero() {
               Join the waitlist — it&apos;s free <ArrowRight size={18} />
             </span>
           </a>
-          <a href="#how-it-works" className="btn-secondary" style={{ fontSize: 17, padding: "16px 32px" }}>
-            See how it works
-          </a>
         </motion.div>
 
-        {/* Social proof */}
+        {/* Social Proof */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -207,22 +196,21 @@ export default function Hero() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: 20,
-            flexWrap: "wrap",
+            gap: 12,
+            marginBottom: 72,
           }}
         >
-          {/* Avatars */}
-          <div style={{ display: "flex" }}>
-            {["#C5A880", "#8C6D3F", "#5A4A35", "#9E9EA7", "#3A3A40"].map((color, i) => (
+          <div style={{ display: "flex", marginLeft: 10 }}>
+            {[0, 1, 2, 3, 4].map((i) => (
               <div
                 key={i}
                 style={{
-                  width: 36,
-                  height: 36,
+                  width: 32,
+                  height: 32,
                   borderRadius: "50%",
-                  background: `linear-gradient(135deg, ${color}, ${color}99)`,
+                  background: i === 0 || i === 3 ? "var(--gradient-accent)" : "rgba(255,255,255,0.1)",
                   border: "2px solid var(--bg-primary)",
-                  marginLeft: i === 0 ? 0 : -10,
+                  marginLeft: i === 0 ? 0 : -8,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -237,7 +225,7 @@ export default function Hero() {
           </div>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 2 }}>
-              {[1,2,3,4,5].map(i => (
+              {[1, 2, 3, 4, 5].map((i) => (
                 <Star key={i} size={14} fill="#C5A880" color="#C5A880" />
               ))}
             </div>
@@ -250,7 +238,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Hero image preview */}
+        {/* Hero image preview (Interactive Mockup) */}
         <motion.div
           initial={{ opacity: 0, y: 60, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -265,38 +253,24 @@ export default function Hero() {
               borderRadius: 24,
               overflow: "hidden",
               border: "1px solid var(--border)",
-              background: "rgba(255,255,255,0.01)",
-              boxShadow: "0 40px 120px rgba(0,0,0,0.6), 0 0 60px var(--glow)",
+              boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
             }}
           >
-            {/* Browser chrome */}
+            {/* Header / Mac controls */}
             <div
               style={{
-                padding: "14px 20px",
-                background: "rgba(255,255,255,0.02)",
+                height: 48,
+                background: "var(--bg-card)",
                 borderBottom: "1px solid var(--border)",
                 display: "flex",
                 alignItems: "center",
+                padding: "0 16px",
                 gap: 8,
               }}
             >
               <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#4A4A4F" }} />
               <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#5A5A60" }} />
               <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#7A7A80" }} />
-              <div
-                style={{
-                  flex: 1,
-                  height: 28,
-                  background: "rgba(255,255,255,0.03)",
-                  borderRadius: 6,
-                  marginLeft: 12,
-                  display: "flex",
-                  alignItems: "center",
-                  paddingLeft: 12,
-                }}
-              >
-                <span style={{ color: "var(--text-muted)", fontSize: 13 }}>app.adra.ai/create</span>
-              </div>
             </div>
 
             {/* App UI mockup */}
@@ -310,10 +284,14 @@ export default function Hero() {
             >
               {/* Left: Prompt panel */}
               <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 16 }}>
-                <div style={{ fontSize: 12, fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase", textAlign: "left" }}>
                   Your prompt
                 </div>
-                <div
+                <textarea
+                  value={promptInput}
+                  onChange={(e) => setPromptInput(e.target.value)}
+                  disabled={isGenerating}
+                  placeholder="Describe your ad creative..."
                   style={{
                     background: "rgba(255,255,255,0.01)",
                     border: "1px solid var(--border-hover)",
@@ -323,27 +301,98 @@ export default function Hero() {
                     color: "var(--text-primary)",
                     lineHeight: 1.6,
                     flexGrow: 1,
-                    textAlign: "left",
+                    minHeight: 120,
+                    resize: "none",
+                    outline: "none",
+                    fontFamily: "inherit",
+                    textAlign: "left"
+                  }}
+                />
+                
+                {/* Logo Uploader */}
+                <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                  <label
+                    style={{
+                      flexGrow: 1,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "10px 14px",
+                      borderRadius: 10,
+                      border: "1px dashed var(--border)",
+                      cursor: isGenerating ? "not-allowed" : "pointer",
+                      fontSize: 13,
+                      color: "var(--text-secondary)",
+                      transition: "all 0.2s",
+                      textAlign: "center"
+                    }}
+                  >
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          setSelectedLogo(e.target.files[0]);
+                        }
+                      }}
+                      disabled={isGenerating}
+                      style={{ display: "none" }}
+                    />
+                    {selectedLogo ? `✓ Logo: ${selectedLogo.name.substring(0, 12)}...` : "+ Upload Logo (optional)"}
+                  </label>
+                  {selectedLogo && (
+                    <button
+                      onClick={() => setSelectedLogo(null)}
+                      disabled={isGenerating}
+                      style={{
+                        background: "rgba(255,255,255,0.05)",
+                        border: "none",
+                        color: "#EF4444",
+                        padding: "10px 14px",
+                        borderRadius: 10,
+                        cursor: "pointer",
+                        fontSize: 13
+                      }}
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
+
+                <button 
+                  onClick={handleGenerate}
+                  disabled={isGenerating || !promptInput}
+                  className="btn-primary" 
+                  style={{ 
+                    justifyContent: "center", 
+                    cursor: isGenerating ? "not-allowed" : "pointer",
+                    width: "100%",
+                    border: "none",
+                    outline: "none"
                   }}
                 >
-                  Instagram post for my coffee shop&apos;s summer iced drinks promotion
-                  <span
-                    style={{
-                      display: "inline-block",
-                      width: 2,
-                      height: 18,
-                      background: "var(--accent)",
-                      marginLeft: 2,
-                      verticalAlign: "middle",
-                      animation: "pulse-glow 1s ease-in-out infinite",
-                    }}
-                  />
-                </div>
-                <div className="btn-primary" style={{ justifyContent: "center", cursor: "default" }}>
                   <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <Sparkles size={16} /> Generate 3 variants
+                    {isGenerating ? (
+                      <>
+                        <div
+                          style={{
+                            width: 16,
+                            height: 16,
+                            border: "2px solid rgba(6,6,8,0.3)",
+                            borderTopColor: "#060608",
+                            borderRadius: "50%",
+                            animation: "spin-slow 0.8s linear infinite",
+                          }}
+                        />
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles size={16} /> Generate Creative
+                      </>
+                    )}
                   </span>
-                </div>
+                </button>
               </div>
 
               {/* Right: Generated images */}
@@ -352,7 +401,7 @@ export default function Hero() {
                   { bg: "linear-gradient(135deg, rgba(197,168,128,0.1), rgba(140,109,63,0.05))", label: "Variant 1", active: true },
                   { bg: "rgba(255,255,255,0.01)", label: "Variant 2", active: false },
                   { bg: "rgba(255,255,255,0.01)", label: "Variant 3", active: false },
-                ].map((card) => (
+                ].map((card, idx) => (
                   <div
                     key={card.label}
                     style={{
@@ -370,43 +419,75 @@ export default function Hero() {
                       padding: 16,
                       position: "relative",
                       overflow: "hidden",
+                      minHeight: 220,
                     }}
                   >
-                    {card.active && (
-                      <div
+                    {idx === 0 && isGenerating ? (
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+                        <div
+                          style={{
+                            width: 24,
+                            height: 24,
+                            border: "3px solid rgba(197, 168, 128, 0.2)",
+                            borderTopColor: "var(--accent)",
+                            borderRadius: "50%",
+                            animation: "spin-slow 0.8s linear infinite",
+                          }}
+                        />
+                        <span style={{ fontSize: 11, color: "var(--text-muted)", textAlign: "center" }}>Creating...</span>
+                      </div>
+                    ) : idx === 0 && generatedImage ? (
+                      <img
+                        src={generatedImage}
+                        alt="AI Generated Creative"
                         style={{
                           position: "absolute",
-                          top: 8,
-                          right: 8,
-                          background: "var(--gradient-accent)",
-                          borderRadius: 6,
-                          padding: "2px 8px",
-                          fontSize: 10,
-                          fontWeight: 700,
-                          color: "#060608",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
                         }}
-                      >
-                        Selected
-                      </div>
+                      />
+                    ) : (
+                      <>
+                        {card.active && (
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: 8,
+                              right: 8,
+                              background: "var(--gradient-accent)",
+                              borderRadius: 6,
+                              padding: "2px 8px",
+                              fontSize: 10,
+                              fontWeight: 700,
+                              color: "#060608",
+                            }}
+                          >
+                            Selected
+                          </div>
+                        )}
+                        <div
+                          style={{
+                            width: 48,
+                            height: 48,
+                            borderRadius: 12,
+                            background: card.active
+                              ? "var(--gradient-accent)"
+                              : "rgba(255,255,255,0.03)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Sparkles size={22} color={card.active ? "#060608" : "rgba(255,255,255,0.2)"} />
+                        </div>
+                        <span style={{ fontSize: 12, color: "var(--text-secondary)", fontWeight: 500 }}>
+                          {card.label}
+                        </span>
+                      </>
                     )}
-                    <div
-                      style={{
-                        width: 48,
-                        height: 48,
-                        borderRadius: 12,
-                        background: card.active
-                          ? "var(--gradient-accent)"
-                          : "rgba(255,255,255,0.03)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Sparkles size={22} color={card.active ? "#060608" : "rgba(255,255,255,0.2)"} />
-                    </div>
-                    <span style={{ fontSize: 12, color: "var(--text-secondary)", fontWeight: 500 }}>
-                      {card.label}
-                    </span>
                   </div>
                 ))}
               </div>
