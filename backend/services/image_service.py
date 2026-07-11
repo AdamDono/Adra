@@ -3,13 +3,14 @@ import io
 import requests
 from PIL import Image, ImageOps
 
-def generate_ad_creative(prompt: str, logo_bytes: bytes = None, brand_colors: list = None) -> bytes:
+def generate_ad_creative(prompt: str, logo_bytes: bytes = None, brand_colors: list = None, seed: int = None) -> bytes:
     """
     Generates an image using an open AI endpoint, then composites a brand logo onto it using Pillow.
     """
     # 1. Generate the base image using Pollinations.ai (free, no auth required, fast)
     encoded_prompt = urllib.parse.quote(prompt)
-    image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=800&height=800&nologo=true&private=true"
+    seed_str = f"&seed={seed}" if seed is not None else ""
+    image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=800&height=800&nologo=true&private=true{seed_str}"
     
     try:
         response = requests.get(image_url, timeout=30)

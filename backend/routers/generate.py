@@ -9,7 +9,8 @@ router = APIRouter(prefix="/api")
 async def generate_creative(
     prompt: str = Form(...),
     brand_colors: Optional[str] = Form(None), # JSON list of strings e.g. '["#C5A880", "#060608"]'
-    logo: Optional[UploadFile] = File(None)
+    logo: Optional[UploadFile] = File(None),
+    seed: Optional[int] = Form(None)
 ):
     logo_bytes = None
     if logo:
@@ -23,6 +24,6 @@ async def generate_creative(
             pass
 
     # Call the image service to generate and composite the ad
-    image_bytes = generate_ad_creative(prompt, logo_bytes, colors_list)
+    image_bytes = generate_ad_creative(prompt, logo_bytes, colors_list, seed)
     
     return Response(content=image_bytes, media_type="image/png")

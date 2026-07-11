@@ -17,8 +17,9 @@ export default function Hero() {
   const [count, setCount] = useState<number | null>(null);
   const [promptInput, setPromptInput] = useState("A professional studio photo of a luxury watch, elegant dark golden lighting, highly detailed");
   const [selectedLogo, setSelectedLogo] = useState<File | null>(null);
-  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [generatedImages, setGeneratedImages] = useState<(string | null)[]>([null, null, null]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [loadingStates, setLoadingStates] = useState<boolean[]>([false, false, false]);
 
   useEffect(() => {
     fetch("/api/waitlist")
@@ -34,33 +35,54 @@ export default function Hero() {
   const handleGenerate = async () => {
     if (!promptInput) return;
     setIsGenerating(true);
-    setGeneratedImage(null);
+    setGeneratedImages([null, null, null]);
+    setLoadingStates([true, true, true]);
 
-    const formData = new FormData();
-    formData.append("prompt", promptInput);
-    if (selectedLogo) {
-      formData.append("logo", selectedLogo);
-    }
-
-    try {
-      const response = await fetch("http://localhost:8000/api/generate", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to generate image from backend.");
+    const generateVariant = async (idx: number, seed: number) => {
+      const formData = new FormData();
+      formData.append("prompt", promptInput);
+      formData.append("seed", seed.toString());
+      if (selectedLogo) {
+        formData.append("logo", selectedLogo);
       }
 
-      const blob = await response.blob();
-      const imageUrl = URL.createObjectURL(blob);
-      setGeneratedImage(imageUrl);
-    } catch (error) {
-      console.error("Generation error:", error);
-      alert("Error generating ad creative. Make sure the backend server is running on port 8000.");
-    } finally {
-      setIsGenerating(false);
-    }
+      try {
+        const response = await fetch("http://localhost:8000/api/generate", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to generate variant ${idx + 1}`);
+        }
+
+        const blob = await response.blob();
+        const imageUrl = URL.createObjectURL(blob);
+        setGeneratedImages((prev) => {
+          const next = [...prev];
+          next[idx] = imageUrl;
+          return next;
+        });
+      } catch (error) {
+        console.error(`Error generating variant ${idx + 1}:`, error);
+      } finally {
+        setLoadingStates((prev) => {
+          const next = [...prev];
+          next[idx] = false;
+          return next;
+        });
+      }
+    };
+
+    // Use distinct seeds to get 3 unique styles
+    const seeds = [
+      Math.floor(Math.random() * 100000),
+      Math.floor(Math.random() * 100000) + 1234,
+      Math.floor(Math.random() * 100000) + 5678,
+    ];
+
+    await Promise.all(seeds.map((seed, idx) => generateVariant(idx, seed)));
+    setIsGenerating(false);
   };
 
   return (
@@ -407,7 +429,7 @@ export default function Hero() {
                     style={{
                       flex: 1,
                       borderRadius: 12,
-                      border: card.active
+                      border: card.active || generatedImages[idx]
                         ? "1.5px solid var(--accent)"
                         : "1px solid var(--border)",
                       background: card.bg,
@@ -419,10 +441,11 @@ export default function Hero() {
                       padding: 16,
                       position: "relative",
                       overflow: "hidden",
+                      aspectRatio: "1 / 1",
                       minHeight: 220,
                     }}
                   >
-                    {idx === 0 && isGenerating ? (
+                    {loadingStates[idx] ? (
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
                         <div
                           style={{
@@ -436,10 +459,10 @@ export default function Hero() {
                         />
                         <span style={{ fontSize: 11, color: "var(--text-muted)", textAlign: "center" }}>Creating...</span>
                       </div>
-                    ) : idx === 0 && generatedImage ? (
+                    ) : generatedImages[idx] ? (
                       <img
-                        src={generatedImage}
-                        alt="AI Generated Creative"
+                        src={generatedImages[idx]!}
+                        alt={`AI Generated Creative ${idx + 1}`}
                         style={{
                           position: "absolute",
                           top: 0,
@@ -465,7 +488,7 @@ export default function Hero() {
                               color: "#060608",
                             }}
                           >
-                            Selected
+                            Ready
                           </div>
                         )}
                         <div
