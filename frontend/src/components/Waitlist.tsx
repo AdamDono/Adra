@@ -13,6 +13,7 @@ type FormData = {
 export default function Waitlist() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const {
     register,
@@ -22,11 +23,30 @@ export default function Waitlist() {
 
   const onSubmit = async (data: FormData) => {
     setLoading(true);
-    // TODO: submit to backend endpoint or Next.js route connected to Neon DB
-    console.log("Waitlist signup:", data);
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    setSubmitted(true);
+    setApiError(null);
+
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to join waitlist. Please try again.");
+      }
+
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error(err);
+      setApiError(err.message || "An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -209,6 +229,12 @@ export default function Waitlist() {
                   </span>
                 </button>
               </div>
+
+              {apiError && (
+                <p style={{ color: "#EF4444", fontSize: 14, marginTop: 12, marginBottom: 12, fontWeight: 500 }}>
+                  {apiError}
+                </p>
+              )}
 
               <p style={{ fontSize: 13, color: "var(--text-muted)", margin: 0 }}>
                 No spam. No credit card. Unsubscribe anytime.
