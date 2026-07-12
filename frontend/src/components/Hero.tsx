@@ -21,6 +21,7 @@ export default function Hero() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [loadingStates, setLoadingStates] = useState<boolean[]>([false, false, false]);
   const [selectedModel, setSelectedModel] = useState("flux");
+  const [showLockWarning, setShowLockWarning] = useState(false);
 
   useEffect(() => {
     fetch("/api/waitlist")
@@ -343,7 +344,11 @@ export default function Hero() {
                   </div>
                   <select
                     value={selectedModel}
-                    onChange={(e) => setSelectedModel(e.target.value)}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setSelectedModel(val);
+                      setShowLockWarning(val !== "flux");
+                    }}
                     disabled={isGenerating}
                     style={{
                       width: "100%",
@@ -359,9 +364,14 @@ export default function Hero() {
                     }}
                   >
                     <option value="flux" style={{ background: "#0c0c0f", color: "#fff" }}>FLUX.1 (Default - Speed & Realism)</option>
-                    <option value="turbo" style={{ background: "#0c0c0f", color: "#fff" }}>SDXL Turbo (Super Fast)</option>
-                    <option value="flux-anime" style={{ background: "#0c0c0f", color: "#fff" }}>FLUX Anime (Stylized Art)</option>
+                    <option value="turbo" style={{ background: "#0c0c0f", color: "#fff" }}>🔒 SDXL Turbo (Waitlist only)</option>
+                    <option value="flux-anime" style={{ background: "#0c0c0f", color: "#fff" }}>🔒 FLUX Anime (Waitlist only)</option>
                   </select>
+                  {showLockWarning && (
+                    <div style={{ fontSize: 12, color: "var(--accent)", marginTop: 6, fontWeight: 500 }}>
+                      🔒 Join the waitlist below to unlock advanced models.
+                    </div>
+                  )}
                 </div>
                 
                 {/* Logo Uploader */}
@@ -415,19 +425,26 @@ export default function Hero() {
                 </div>
 
                 <button 
-                  onClick={handleGenerate}
-                  disabled={isGenerating || !promptInput}
+                  onClick={selectedModel !== "flux" 
+                    ? () => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" }) 
+                    : handleGenerate
+                  }
+                  disabled={isGenerating || (selectedModel === "flux" && !promptInput)}
                   className="btn-primary" 
                   style={{ 
                     justifyContent: "center", 
-                    cursor: isGenerating ? "not-allowed" : "pointer",
+                    cursor: "pointer",
                     width: "100%",
                     border: "none",
                     outline: "none"
                   }}
                 >
                   <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    {isGenerating ? (
+                    {selectedModel !== "flux" ? (
+                      <>
+                        Join Waitlist to Unlock
+                      </>
+                    ) : isGenerating ? (
                       <>
                         <div
                           style={{
