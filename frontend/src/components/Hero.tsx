@@ -50,7 +50,14 @@ export default function Hero() {
       }
 
       try {
-        let backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+        let backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "";
+        if (!backendUrl || backendUrl.includes("localhost")) {
+          if (typeof window !== "undefined" && window.location.hostname.includes("onrender.com")) {
+            backendUrl = "https://adra-backend.onrender.com";
+          } else {
+            backendUrl = "http://localhost:8000";
+          }
+        }
         if (!backendUrl.startsWith("http")) {
           backendUrl = `https://${backendUrl}`;
         }
