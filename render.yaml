@@ -1,0 +1,27 @@
+services:
+  # Python FastAPI Backend Service
+  - type: web
+    name: adra-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+
+  # Next.js Frontend Web Service
+  - type: web
+    name: adra-frontend
+    runtime: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://neondb_owner:npg_4Zb3rQcUnalE@ep-holy-voice-at4whfql-pooler.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - key: NEXT_PUBLIC_BACKEND_URL
+        fromService:
+          type: web
+          name: adra-backend
+          property: host

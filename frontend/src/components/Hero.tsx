@@ -50,7 +50,11 @@ export default function Hero() {
       }
 
       try {
-        const response = await fetch("http://localhost:8000/api/generate", {
+        let backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+        if (!backendUrl.startsWith("http")) {
+          backendUrl = `https://${backendUrl}`;
+        }
+        const response = await fetch(`${backendUrl}/api/generate`, {
           method: "POST",
           body: formData,
         });
