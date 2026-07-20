@@ -51,7 +51,7 @@ export default function Hero() {
 
       try {
         let backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "";
-        if (!backendUrl || backendUrl.includes("localhost")) {
+        if (!backendUrl || backendUrl === "adra-backend" || backendUrl === "https://adra-backend") {
           if (typeof window !== "undefined" && window.location.hostname.includes("onrender.com")) {
             backendUrl = "https://adra-backend.onrender.com";
           } else {
@@ -60,6 +60,9 @@ export default function Hero() {
         }
         if (!backendUrl.startsWith("http")) {
           backendUrl = `https://${backendUrl}`;
+        }
+        if (!backendUrl.includes(".") && !backendUrl.includes("localhost")) {
+          backendUrl = `${backendUrl}.onrender.com`;
         }
         const response = await fetch(`${backendUrl}/api/generate`, {
           method: "POST",
