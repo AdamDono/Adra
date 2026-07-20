@@ -166,7 +166,7 @@ export default function Hero() {
           animate="visible"
           custom={0.1}
           style={{
-            fontSize: "clamp(44px, 7vw, 80px)",
+            fontSize: "clamp(32px, 6.5vw, 80px)",
             fontWeight: 900,
             lineHeight: 1.05,
             letterSpacing: "-0.04em",
@@ -472,7 +472,7 @@ export default function Hero() {
               </div>
 
               {/* Right: Generated images */}
-              <div className="mockup-images" style={{ flex: 2, display: "flex", flexDirection: "row", gap: 12, width: "100%" }}>
+              <div className="mockup-images" style={{ flex: 2 }}>
                 {[
                   { bg: "linear-gradient(135deg, rgba(197,168,128,0.1), rgba(140,109,63,0.05))", label: "Variant 1", active: true },
                   { bg: "rgba(255,255,255,0.01)", label: "Variant 2", active: false },

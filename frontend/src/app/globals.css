@@ -237,7 +237,7 @@ body::before {
   text-transform: uppercase;
 }
 
-/* ── Mockup responsiveness ─────────────────────────────────── */
+/* ── Mockup & Layout Responsiveness ──────────────────────────── */
 .mockup-container {
   display: flex;
   gap: 24px;
@@ -246,14 +246,31 @@ body::before {
 .mockup-images {
   display: flex;
   gap: 12px;
+  width: 100%;
 }
+.mockup-images > div {
+  flex: 1;
+}
+
 @media (max-width: 768px) {
   .mockup-container {
     flex-direction: column;
   }
-}
-@media (max-width: 480px) {
   .mockup-images {
-    flex-direction: column;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .mockup-images > div {
+    scroll-snap-align: start;
+    flex: 0 0 80%;
+    min-width: 220px;
+    max-width: 300px;
+  }
+  .step-connector {
+    display: none;
   }
 }
